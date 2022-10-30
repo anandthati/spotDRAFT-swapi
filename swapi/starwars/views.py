@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 
 
 class HealthCheck(APIView):
+    """
+        Health check API to test the application running
+    """
     def get(self, request):
         # Checking DB
         db_conn = connections['default']
@@ -21,6 +24,12 @@ class HealthCheck(APIView):
 
 
 class ListMovies(APIView):
+    """
+        This API returns all the films from Swapi.dev
+        based on the requesting user it returns favorite and custom titles
+        Inputs: path paremeters search & user 
+        methods allowed: GET
+    """
     def get(self, request):
         search_term = request.GET.get("search")
         if search_term:
@@ -40,6 +49,12 @@ class ListMovies(APIView):
 
 
 class MovieDetails(APIView):
+    """
+        This API returns the requestedd film from Swapi.dev
+        based on the requesting user it returns favorite and custom titles
+        Inputs: path paremeters user 
+        methods allowed: GET
+    """
     def get(self, request, film_id):
         movies = get_swapi_data("films", film_id)
         user_id = request.GET.get("user")
@@ -52,6 +67,12 @@ class MovieDetails(APIView):
 
 
 class FavouriteMovie(APIView):
+    """
+        This API marks film favorite & custome title
+        Inputs: path paremeters user 
+        output: status code
+        methods allowed: POST
+    """
 
     def post(self, request, film_id):
         film = get_swapi_data("films", film_id)
@@ -72,6 +93,12 @@ class FavouriteMovie(APIView):
 
 
 class ListPlanets(APIView):
+    """
+        This API returns all the films from Swapi.dev
+        based on the requesting user it returns favorite and custom titles
+        Inputs: path paremeters search & user 
+        methods allowed: GET
+    """
     def get(self, request):
         search_term = request.GET.get("search")
         if search_term:
@@ -91,6 +118,12 @@ class ListPlanets(APIView):
 
 
 class PlanetDetails(APIView):
+    """
+        This API returns the requested planet from Swapi.dev
+        based on the requesting user it returns favorite and custom name
+        Inputs: path paremeters user 
+        methods allowed: GET
+    """
     def get(self, request, planet_id):
         planets = get_swapi_data("planets", planet_id)
         if not planets:
@@ -103,6 +136,12 @@ class PlanetDetails(APIView):
 
     
 class FavouritePlanet(APIView):
+    """
+        This API marks planet favorite & custome name
+        Inputs: path paremeters user 
+        output: status code
+        methods allowed: POST
+    """
 
     def post(self, request, planet_id):
         planet = get_swapi_data("planets", planet_id)
